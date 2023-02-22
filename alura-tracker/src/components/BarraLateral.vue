@@ -6,15 +6,18 @@
     <button class="button" @click="alterarTema">
       {{ textoBotao }}
     </button>
+    <Menu />
   </header>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import Menu from "./Menu.vue";
 
 export default defineComponent({
   name: "BarraLateral",
   emits: ["aoTemaAlterado"],
+  components: { Menu },
   data() {
     return {
       modoEscuroAtivo: false,
