@@ -14,8 +14,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { useStore } from "@/store";
-import { ADICIONAR_PROJETO, ALTERAR_PROJETO } from "@/store/tipo-multacoes";
+import { useStore } from "../../store";
+import { ADICIONAR_PROJETO, ALTERAR_PROJETO } from "../../store/tipo-multacoes";
+import { TipoNotificao } from "../../Interfaces/INotificacao";
+
+import { notificacaoMixin } from "../../mixins/notificar";
 
 export default defineComponent({
   name: "formulario-projetos",
@@ -24,6 +27,7 @@ export default defineComponent({
       type: String,
     },
   },
+  mixins: [notificacaoMixin],
   data() {
     return {
       nomeDoProjeto: "",
@@ -48,6 +52,7 @@ export default defineComponent({
         this.store.commit(ADICIONAR_PROJETO, this.nomeDoProjeto);
       }
       this.nomeDoProjeto = "";
+      this.notificar("Sucesso", "O Projeto foi adicionado", TipoNotificao.SUCESSO);
       this.$router.push("/projetos");
     },
   },

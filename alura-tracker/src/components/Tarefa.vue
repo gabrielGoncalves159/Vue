@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import ITarefa from "@/Interfaces/ITarefa";
+import ITarefa from "../Interfaces/ITarefa";
 import { defineComponent, PropType } from "vue";
 import Cronometro from "./Cronometro.vue";
 import Box from "./Box.vue";
