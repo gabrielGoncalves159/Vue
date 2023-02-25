@@ -17,8 +17,9 @@ import { defineComponent } from "vue";
 import { useStore } from "../../store";
 import { ADICIONAR_PROJETO, ALTERAR_PROJETO } from "../../store/tipo-multacoes";
 import { TipoNotificao } from "../../Interfaces/INotificacao";
+import useNotificador from "../../hooks/notificador";
 
-import { notificacaoMixin } from "../../mixins/notificar";
+// import { notificacaoMixin } from "../../mixins/notificar"; importação para utilizar o mixin
 
 export default defineComponent({
   name: "formulario-projetos",
@@ -27,7 +28,7 @@ export default defineComponent({
       type: String,
     },
   },
-  mixins: [notificacaoMixin],
+  // mixins: [notificacaoMixin], criando o objeto mixin
   data() {
     return {
       nomeDoProjeto: "",
@@ -58,8 +59,11 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
+    // importando a notificação utilizando o metodo hook
+    const { notificar } = useNotificador();
     return {
       store,
+      notificar,
     };
   },
 });
