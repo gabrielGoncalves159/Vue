@@ -38,23 +38,29 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import { useStore } from "../../store";
-import { EXCLUIR_PROJETO } from "../../store/tipo-multacoes";
-import { OBTER_PROJETOS } from "../../store/tipo-acoes";
+import { OBTER_PROJETOS, REMOVER_PROJETO } from "../../store/tipo-acoes";
+import useNotificador from "../../hooks/notificador";
+import { TipoNotificao } from "../../Interfaces/INotificacao";
 
 export default defineComponent({
   name: "projetos-tracker",
   methods: {
-    excluir(id : string){
-        this.store.commit(EXCLUIR_PROJETO, id)
-    }
+    excluir(id: string) {
+      this.store.dispatch(REMOVER_PROJETO, id)
+      .then(() => {
+        this.notificar("Sucesso", "O projeto foi excluido", TipoNotificao.SUCESSO);
+      });
+    },
   },
   setup() {
     const store = useStore();
+    const { notificar } = useNotificador();
     // chamando a actions para trazer os projetos
     store.dispatch(OBTER_PROJETOS);
     return {
       projetos: computed(() => store.state.projetos),
-      store
+      store,
+      notificar,
     };
   },
 });

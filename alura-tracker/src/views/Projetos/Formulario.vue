@@ -15,9 +15,9 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useStore } from "../../store";
-import { ADICIONAR_PROJETO, ALTERAR_PROJETO } from "../../store/tipo-multacoes";
 import { TipoNotificao } from "../../Interfaces/INotificacao";
 import useNotificador from "../../hooks/notificador";
+import { CADASTRAR_PROJETO, EDITAR_PROJETO } from "../../store/tipo-acoes";
 
 // import { notificacaoMixin } from "../../mixins/notificar"; importação para utilizar o mixin
 
@@ -44,18 +44,25 @@ export default defineComponent({
   methods: {
     salvar() {
       if (this.id) {
-        this.store.commit(ALTERAR_PROJETO, {
+        this.store.dispatch(EDITAR_PROJETO, {
           id: this.id,
           nome: this.nomeDoProjeto,
-        });
+        })
+        .then(() => {this.lidarComSucesso("O Projeto foi alterado")})
       } else {
-        // estrutura para chamar uma mutations
-        this.store.commit(ADICIONAR_PROJETO, this.nomeDoProjeto);
+        // estrutura para chamar uma action
+        this.store.dispatch(CADASTRAR_PROJETO, this.nomeDoProjeto)
+          .then(() => {this.lidarComSucesso("O Projeto foi adicionado")})
+          .catch(() => {
+            this.notificar("Erro", "Erro ao adicionado um projeto", TipoNotificao.FALHA);
+          })
       }
-      this.nomeDoProjeto = "";
-      this.notificar("Sucesso", "O Projeto foi adicionado", TipoNotificao.SUCESSO);
-      this.$router.push("/projetos");
     },
+    lidarComSucesso(texto: string) {
+      this.nomeDoProjeto = "";
+      this.notificar("Sucesso", texto, TipoNotificao.SUCESSO);
+      this.$router.push("/projetos");
+    }
   },
   setup() {
     const store = useStore();
