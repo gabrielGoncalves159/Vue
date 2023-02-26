@@ -37,8 +37,9 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import { useStore } from "@/store";
-import { EXCLUIR_PROJETO } from "@/store/tipo-multacoes";
+import { useStore } from "../../store";
+import { EXCLUIR_PROJETO } from "../../store/tipo-multacoes";
+import { OBTER_PROJETOS } from "../../store/tipo-acoes";
 
 export default defineComponent({
   name: "projetos-tracker",
@@ -49,6 +50,8 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
+    // chamando a actions para trazer os projetos
+    store.dispatch(OBTER_PROJETOS);
     return {
       projetos: computed(() => store.state.projetos),
       store

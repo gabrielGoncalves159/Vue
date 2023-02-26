@@ -2,7 +2,9 @@ import { INotificacao } from "@/Interfaces/INotificacao";
 import IProjetos from "@/Interfaces/IProjetos";
 import { InjectionKey } from "vue";
 import { createStore, Store, useStore as vuexUseStore } from "vuex";
-import { ADICIONAR_PROJETO, ALTERAR_PROJETO, EXCLUIR_PROJETO, NOTIFICAR } from "../store/tipo-multacoes"
+import { ADICIONAR_PROJETO, ALTERAR_PROJETO, DEFINIR_PROJETOS, EXCLUIR_PROJETO, NOTIFICAR } from "../store/tipo-multacoes"
+import { OBTER_PROJETOS } from "./tipo-acoes";
+import http from "@/http"
 
 interface Estado {
     projetos : IProjetos []
@@ -31,6 +33,10 @@ export const store = createStore<Estado>({
         [EXCLUIR_PROJETO](state, id: string) {
             state.projetos = state.projetos.filter(proj => proj.id != id)
         },
+        // obtendo os prjetos criados pela API
+        [DEFINIR_PROJETOS](state, projetos: IProjetos []) {
+            state.projetos = projetos
+        },
         [NOTIFICAR](state, novaNotificacao: INotificacao) {
 
                 novaNotificacao.id = new Date().getTime()
@@ -39,6 +45,13 @@ export const store = createStore<Estado>({
                 setTimeout(() => {
                     state.notificacoes = state.notificacoes.filter(notificacao => notificacao.id != novaNotificacao.id)
                 }, 3000)
+        }
+    },
+    actions: {
+        //criando a actions que ira trazer o dados da API
+        [OBTER_PROJETOS]( {commit} ) {
+            http.get('projetos')
+                .then(resposta => commit(DEFINIR_PROJETOS, resposta.data))
         }
     }
 })
