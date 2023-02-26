@@ -3,6 +3,30 @@
     {
       "id": 1,
       "nome": "Alura Tracker"
+    },
+    {
+      "nome": "dad",
+      "id": 2
+    }
+  ],
+  "tarefas": [
+    {
+      "id": 1,
+      "duracaoEmSegundo": 120,
+      "descricao": "teste",
+      "projeto": {
+        "id": 1,
+        "nome": "Alura Tracker"
+      }
+    },
+    {
+      "duracaoEmSegundos": 2,
+      "descricao": "teste2",
+      "projeto": {
+        "id": 1,
+        "nome": "Alura Tracker"
+      },
+      "id": 2
     }
   ]
 }
