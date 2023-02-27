@@ -7,6 +7,10 @@
     {
       "nome": "dad",
       "id": 2
+    },
+    {
+      "nome": "DSGDG",
+      "id": 3
     }
   ],
   "tarefas": [
@@ -27,6 +31,15 @@
         "nome": "Alura Tracker"
       },
       "id": 2
+    },
+    {
+      "duracaoEmSegundos": 3,
+      "descricao": "FASFA",
+      "projeto": {
+        "id": 1,
+        "nome": "Alura Tracker"
+      },
+      "id": 3
     }
   ]
 }
