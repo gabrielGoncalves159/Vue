@@ -18,6 +18,7 @@ import { useStore } from "../../store";
 import { TipoNotificao } from "../../Interfaces/INotificacao";
 import useNotificador from "../../hooks/notificador";
 import { CADASTRAR_PROJETO, EDITAR_PROJETO } from "../../store/tipo-acoes";
+import { useRouter } from "vue-router";
 
 // import { notificacaoMixin } from "../../mixins/notificar"; importação para utilizar o mixin
 
@@ -28,64 +29,53 @@ export default defineComponent({
       type: String,
     },
   },
-  // mixins: [notificacaoMixin], criando o objeto mixin
-  // data() {
-  //   return {
-  //     nomeDoProjeto: "",
-  //   };
-  // },
-  mounted() {
-    // if (this.id) {
-    //   const projeto = this.store.state.projeto.projetos.find((proj) => proj.id == this.id);
-    //   this.nomeDoProjeto = projeto?.nome || "";
-    //   console.log(projeto);
-    // }
-  },
-  methods: {
-    salvar() {
-      if (this.id) {
-        this.store
-          .dispatch(EDITAR_PROJETO, {
-            id: this.id,
-            nome: this.nomeDoProjeto,
-          })
-          .then(() => {
-            this.lidarComSucesso("O Projeto foi alterado");
-          });
-      } else {
-        // estrutura para chamar uma action
-        this.store
-          .dispatch(CADASTRAR_PROJETO, this.nomeDoProjeto)
-          .then(() => {
-            this.lidarComSucesso("O Projeto foi adicionado");
-          })
-          .catch(() => {
-            this.notificar("Erro", "Erro ao adicionado um projeto", TipoNotificao.FALHA);
-          });
-      }
-    },
-    lidarComSucesso(texto: string) {
-      this.nomeDoProjeto = "";
-      this.notificar("Sucesso", texto, TipoNotificao.SUCESSO);
-      this.$router.push("/projetos");
-    },
-  },
   setup(props) {
+    // refaturando para conposition API
+    const router = useRouter();
     const store = useStore();
+   
     // importando a notificação utilizando o metodo hook
     const { notificar } = useNotificador();
     const nomeDoProjeto = ref("");
-
+    
     if (props.id) {
       const projeto = store.state.projeto.projetos.find((proj) => proj.id == props.id);
       nomeDoProjeto.value = projeto?.nome || "";
       console.log(projeto);
     }
 
+    const lidarComSucesso = (texto: string) => {
+      nomeDoProjeto.value = "";
+      notificar("Sucesso", texto, TipoNotificao.SUCESSO);
+      router.push("/projetos");
+    }
+
+    const salvar = () => {
+      if (props.id) {
+        store
+          .dispatch(EDITAR_PROJETO, {
+            id: props.id,
+            nome: nomeDoProjeto.value,
+          })
+          .then(() => {
+            lidarComSucesso("O Projeto foi alterado");
+          });
+      } else {
+        // estrutura para chamar uma action
+        store
+          .dispatch(CADASTRAR_PROJETO, nomeDoProjeto.value)
+          .then(() => {
+            lidarComSucesso("O Projeto foi adicionado");
+          })
+          .catch(() => {
+            notificar("Erro", "Erro ao adicionado um projeto", TipoNotificao.FALHA);
+          });
+      }
+    }
+
     return {
-      store,
-      notificar,
       nomeDoProjeto,
+      salvar,
     };
   },
 });
