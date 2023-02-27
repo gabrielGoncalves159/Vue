@@ -34,7 +34,7 @@
     },
     {
       "duracaoEmSegundos": 3,
-      "descricao": "FASFA",
+      "descricao": "FAS",
       "projeto": {
         "id": 1,
         "nome": "Alura Tracker"

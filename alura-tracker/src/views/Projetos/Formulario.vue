@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { useStore } from "../../store";
 import { TipoNotificao } from "../../Interfaces/INotificacao";
 import useNotificador from "../../hooks/notificador";
@@ -29,48 +29,63 @@ export default defineComponent({
     },
   },
   // mixins: [notificacaoMixin], criando o objeto mixin
-  data() {
-    return {
-      nomeDoProjeto: "",
-    };
-  },
+  // data() {
+  //   return {
+  //     nomeDoProjeto: "",
+  //   };
+  // },
   mounted() {
-    if (this.id) {
-      const projeto = this.store.state.projeto.projetos.find((proj) => proj.id == this.id);
-      this.nomeDoProjeto = projeto?.nome || "";
-      console.log(projeto);
-    }
+    // if (this.id) {
+    //   const projeto = this.store.state.projeto.projetos.find((proj) => proj.id == this.id);
+    //   this.nomeDoProjeto = projeto?.nome || "";
+    //   console.log(projeto);
+    // }
   },
   methods: {
     salvar() {
       if (this.id) {
-        this.store.dispatch(EDITAR_PROJETO, {
-          id: this.id,
-          nome: this.nomeDoProjeto,
-        })
-        .then(() => {this.lidarComSucesso("O Projeto foi alterado")})
+        this.store
+          .dispatch(EDITAR_PROJETO, {
+            id: this.id,
+            nome: this.nomeDoProjeto,
+          })
+          .then(() => {
+            this.lidarComSucesso("O Projeto foi alterado");
+          });
       } else {
         // estrutura para chamar uma action
-        this.store.dispatch(CADASTRAR_PROJETO, this.nomeDoProjeto)
-          .then(() => {this.lidarComSucesso("O Projeto foi adicionado")})
+        this.store
+          .dispatch(CADASTRAR_PROJETO, this.nomeDoProjeto)
+          .then(() => {
+            this.lidarComSucesso("O Projeto foi adicionado");
+          })
           .catch(() => {
             this.notificar("Erro", "Erro ao adicionado um projeto", TipoNotificao.FALHA);
-          })
+          });
       }
     },
     lidarComSucesso(texto: string) {
       this.nomeDoProjeto = "";
       this.notificar("Sucesso", texto, TipoNotificao.SUCESSO);
       this.$router.push("/projetos");
-    }
+    },
   },
-  setup() {
+  setup(props) {
     const store = useStore();
     // importando a notificação utilizando o metodo hook
     const { notificar } = useNotificador();
+    const nomeDoProjeto = ref("");
+
+    if (props.id) {
+      const projeto = store.state.projeto.projetos.find((proj) => proj.id == props.id);
+      nomeDoProjeto.value = projeto?.nome || "";
+      console.log(projeto);
+    }
+
     return {
       store,
       notificar,
+      nomeDoProjeto,
     };
   },
 });
