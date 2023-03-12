@@ -11,7 +11,6 @@
     </div>
   </Box>
 </template>
-
 <script lang="ts">
 import ITarefa from "../Interfaces/ITarefa";
 import { defineComponent, PropType } from "vue";
@@ -37,14 +36,12 @@ export default defineComponent({
     const tarefaClicada = () : void => {
       emit('aoTarefaClicada', props.tarefa)
     }
-
     return {
       tarefaClicada
     }
   },
 });
 </script>
-
 <style scoped>
 .clicavel {
   cursor: pointer;

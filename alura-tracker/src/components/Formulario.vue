@@ -29,7 +29,6 @@
     </div>
   </div>
 </template>
-
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
 import Temporizador from "./Temporizador.vue";
@@ -70,7 +69,6 @@ export default defineComponent({
       });
       descricao.value = "";
     }
-
     return {
       projetos,
       store,
@@ -81,7 +79,6 @@ export default defineComponent({
   },
 });
 </script>
-
 <style>
 .formulario {
   color: var(--texto-primario);
