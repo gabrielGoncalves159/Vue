@@ -29,7 +29,6 @@ export const projeto: Module<EstadoProjeto, Estado> = {
         [DEFINIR_PROJETOS](state, projetos: IProjetos []) {
             state.projetos = projetos
         },
-
     },
     actions: {
         [OBTER_PROJETOS]( {commit} ) {
@@ -47,7 +46,6 @@ export const projeto: Module<EstadoProjeto, Estado> = {
         [REMOVER_PROJETO]({commit}, id: string) {
             return http.delete(`/projetos/${id}`)
                 .then(() => commit(EXCLUIR_PROJETO, id))
-
         },
     },
 }

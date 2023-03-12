@@ -24,7 +24,6 @@ export const store = createStore<Estado>({
         tarefa: {
             tarefas: [],
         },
-
     },
     mutations: {
         //Altera estado local
@@ -32,7 +31,6 @@ export const store = createStore<Estado>({
 
             novaNotificacao.id = new Date().getTime()
             state.notificacoes.push(novaNotificacao)
-
             setTimeout(() => {
                 state.notificacoes = state.notificacoes.filter(notificacao => notificacao.id != novaNotificacao.id)
             }, 3000)

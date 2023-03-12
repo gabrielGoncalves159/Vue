@@ -28,7 +28,6 @@ export const tarefa: Module<EstadoTarefa, Estado> = {
             if(filtro){
                 url += '?descricao=' + filtro
             }
-
             return http.get(url)
                 .then(resposta => commit(DEFINIR_TAREFAS, resposta.data))
         },
