@@ -15,13 +15,13 @@
   ],
   "tarefas": [
     {
-      "id": 1,
       "duracaoEmSegundo": 120,
       "descricao": "teste",
       "projeto": {
         "id": 1,
         "nome": "Alura Tracker"
-      }
+      },
+      "id": 1
     },
     {
       "duracaoEmSegundos": 2,

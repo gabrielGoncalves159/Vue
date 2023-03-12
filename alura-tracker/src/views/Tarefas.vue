@@ -32,6 +32,7 @@
           <input
             type="text"
             class="input"
+            v-if="tarefaSelecionada"
             v-model="tarefaSelecionada.descricao"
             id="descricaoDaTarefa"
           />
