@@ -34,7 +34,6 @@
     </table>
   </section>
 </template>
-
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import { useStore } from "../../store";
@@ -46,8 +45,7 @@ export default defineComponent({
   name: "projetos-tracker",
   methods: {
     excluir(id: string) {
-      this.store.dispatch(REMOVER_PROJETO, id)
-      .then(() => {
+      this.store.dispatch(REMOVER_PROJETO, id).then(() => {
         this.notificar("Sucesso", "O projeto foi excluido", TipoNotificao.SUCESSO);
       });
     },

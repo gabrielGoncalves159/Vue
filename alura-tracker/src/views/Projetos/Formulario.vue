@@ -11,7 +11,6 @@
     </form>
   </section>
 </template>
-
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { useStore } from "../../store";
@@ -19,7 +18,6 @@ import { TipoNotificao } from "../../Interfaces/INotificacao";
 import useNotificador from "../../hooks/notificador";
 import { CADASTRAR_PROJETO, EDITAR_PROJETO } from "../../store/tipo-acoes";
 import { useRouter } from "vue-router";
-
 // import { notificacaoMixin } from "../../mixins/notificar"; importação para utilizar o mixin
 
 export default defineComponent({
@@ -33,11 +31,11 @@ export default defineComponent({
     // refaturando para conposition API
     const router = useRouter();
     const store = useStore();
-   
+
     // importando a notificação utilizando o metodo hook
     const { notificar } = useNotificador();
     const nomeDoProjeto = ref("");
-    
+
     if (props.id) {
       const projeto = store.state.projeto.projetos.find((proj) => proj.id == props.id);
       nomeDoProjeto.value = projeto?.nome || "";
@@ -48,7 +46,7 @@ export default defineComponent({
       nomeDoProjeto.value = "";
       notificar("Sucesso", texto, TipoNotificao.SUCESSO);
       router.push("/projetos");
-    }
+    };
 
     const salvar = () => {
       if (props.id) {
@@ -71,8 +69,7 @@ export default defineComponent({
             notificar("Erro", "Erro ao adicionado um projeto", TipoNotificao.FALHA);
           });
       }
-    }
-
+    };
     return {
       nomeDoProjeto,
       salvar,

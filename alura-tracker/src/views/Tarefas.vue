@@ -45,7 +45,6 @@
     </Modal>
   </div>
 </template>
-
 <script lang="ts">
 import { computed, defineComponent, ref, watchEffect } from "vue";
 import Formulario from "../components/Formulario.vue";
@@ -114,7 +113,6 @@ export default defineComponent({
     watchEffect(() => {
       store.dispatch(OBTER_TAREFAS, filtro.value);
     });
-
     return {
       tarefas: computed(() => store.state.tarefa.tarefas),
       store,
@@ -123,7 +121,6 @@ export default defineComponent({
   },
 });
 </script>
-
 <style>
 .lista {
   padding: 1.25rem;
