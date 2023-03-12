@@ -4,7 +4,6 @@ import Projetos from "../views/Projetos.vue"
 import Formulario from "../views/Projetos/Formulario.vue"
 import Lista from "../views/Projetos/Lista.vue"
 
-
 const rotas: RouteRecordRaw[] = [
     {
         path: '/',
@@ -34,7 +33,6 @@ const rotas: RouteRecordRaw[] = [
             },
         ],
     },
-
 ]
 
 const roteador = createRouter({
